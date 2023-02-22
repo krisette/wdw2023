@@ -22,6 +22,7 @@ import {
 	SunIcon,
 } from '@heroicons/react/24/outline'
 import Logo from '../assets/mickeymousehead.png'
+import DarkModeLogo from '../assets/mickeymousehead_darkmode.png'
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import { useDarkMode } from '../context/DarkModeContext'
 
@@ -35,7 +36,7 @@ export default function NavBar() {
 	}
 
 	return (
-		<Disclosure as="nav" className="bg-white dark:bg-black shadow">
+		<Disclosure as="nav" className="bg-white dark:bg-zinc-900 shadow">
 			{({ open }) => (
 				<>
 					<div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -44,26 +45,25 @@ export default function NavBar() {
 								<div className="flex flex-shrink-0 items-center">
 									<img
 										className="block h-8 w-auto lg:hidden"
-										src={Logo}
+										src={isDark ? DarkModeLogo : Logo}
 										alt="Mickey Mouse head"
 									/>
 									<img
 										className="hidden h-8 w-auto lg:block"
-										src={Logo}
+										src={isDark ? DarkModeLogo : Logo}
 										alt="Mickey Mouse head"
 									/>
 								</div>
 								<div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-									{/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
 									<a
 										href="#"
-										className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover-underline-animation"
+										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-900 dark:text-zinc-300 hover-underline-animation"
 									>
                     Non-EPCOT
 									</a>
 									<a
 										href="#"
-										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover-underline-animation"
+										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-zinc-300 hover-underline-animation"
 									>
                     EPCOT
 									</a>
@@ -120,14 +120,14 @@ export default function NavBar() {
 							<Disclosure.Button
 								as="a"
 								href="#"
-								className="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
+								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
 							>
                 Non-EPCOT
 							</Disclosure.Button>
 							<Disclosure.Button
 								as="a"
 								href="#"
-								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
 							>
                 EPCOT
 							</Disclosure.Button>
@@ -135,7 +135,7 @@ export default function NavBar() {
 						<div className="border-t border-gray-200 pt-4 pb-3">
 							<div className="flex items-center px-4">
 								<div>
-									<div className="text-base font-medium text-gray-800">
+									<div className="text-base font-medium text-gray-800 dark:text-gray-300">
 										<button
 											type="button"
 											className=""

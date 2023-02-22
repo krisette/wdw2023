@@ -20,8 +20,8 @@ import FoodCard from './FoodCard'
 
 const filters = [
 	{
-		id: 'parks',
-		name: 'Parks',
+		id: 'location',
+		name: 'Location',
 		options: [
 			{ value: '1', label: 'Animal Kingdom' },
 			{ value: '2', label: 'Hollywood Studios' },
@@ -74,7 +74,7 @@ export default function FoodsToTry() {
 	}
 
 	return (
-		<div className="bg-zinc-100 dark:bg-black">
+		<div className="bg-zinc-100 dark:bg-zinc-800">
 			<div>
 				{/* Mobile filter dialog */}
 				<Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -105,9 +105,9 @@ export default function FoodsToTry() {
 								leaveFrom="translate-x-0"
 								leaveTo="translate-x-full"
 							>
-								<Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+								<Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-zinc-900 py-4 pb-6 shadow-xl">
 									<div className="flex items-center justify-between px-4">
-										<h2 className="text-lg font-medium text-gray-900">
+										<h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
                       Filters
 										</h2>
 										<button
@@ -132,7 +132,7 @@ export default function FoodsToTry() {
 													<fieldset>
 														<legend className="w-full px-2">
 															<Disclosure.Button className="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500">
-																<span className="text-sm font-medium text-gray-900">
+																<span className="text-sm font-medium text-gray-900 dark:text-gray-300">
 																	{section.name}
 																</span>
 																<span className="ml-6 flex h-7 items-center">
@@ -163,7 +163,7 @@ export default function FoodsToTry() {
 																		/>
 																		<label
 																			htmlFor={`${section.id}-${optionIdx}-mobile`}
-																			className="ml-3 text-sm text-gray-500"
+																			className="ml-3 text-sm text-gray-500 dark:text-gray-300"
 																		>
 																			{option.label}
 																		</label>
@@ -192,7 +192,7 @@ export default function FoodsToTry() {
 								className="inline-flex items-center lg:hidden"
 								onClick={() => setMobileFiltersOpen(true)}
 							>
-								<span className="text-sm font-medium text-gray-700">
+								<span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Filters
 								</span>
 								<PlusIcon
@@ -209,7 +209,7 @@ export default function FoodsToTry() {
 											className={sectionIdx === 0 ? null : 'pt-10'}
 										>
 											<fieldset>
-												<legend className="block text-sm font-medium text-gray-900">
+												<legend className="block text-sm font-medium text-gray-900 dark:text-gray-300">
 													{section.name}
 												</legend>
 												<div className="space-y-3 pt-6">
@@ -228,7 +228,7 @@ export default function FoodsToTry() {
 															/>
 															<label
 																htmlFor={`${section.id}-${optionIdx}`}
-																className="ml-3 text-sm text-gray-600"
+																className="ml-3 text-sm text-gray-600 dark:text-gray-400"
 															>
 																{option.label}
 															</label>
