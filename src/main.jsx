@@ -14,15 +14,11 @@ const router = createHashRouter([
 		children: [
 			{
 				path: '',
-				element: <Home />
+				element: <FoodsToTry />
 			},
 			{
 				path: 'epcot',
 				element: <EPCOTFoodsToTry />,
-			},
-			{
-				path: 'non-epcot',
-				element: <FoodsToTry />,
 			},
 		]
 	}

@@ -57,7 +57,7 @@ export default function NavBar() {
 								</div>
 								<div className="hidden lg:ml-6 lg:flex lg:space-x-8">
 									<Link
-										to={'non-epcot'}
+										to={''}
 										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-900 dark:text-zinc-300 hover-underline-animation"
 									>
                     Non-EPCOT
@@ -120,7 +120,7 @@ export default function NavBar() {
 							{/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
 							<Disclosure.Button
 								as={Link}
-								to={'non-epcot'}
+								to={''}
 								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
 							>
                 Non-EPCOT
