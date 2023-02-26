@@ -119,15 +119,15 @@ export default function NavBar() {
 						<div className="space-y-1 pt-2 pb-3">
 							{/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
 							<Disclosure.Button
-								as="a"
-								href={'non-epcot'}
+								as={Link}
+								to={'non-epcot'}
 								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
 							>
                 Non-EPCOT
 							</Disclosure.Button>
 							<Disclosure.Button
-								as="a"
-								href={'epcot'}
+								as={Link}
+								to={'epcot'}
 								className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
 							>
                 EPCOT
