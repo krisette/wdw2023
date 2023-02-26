@@ -61,13 +61,13 @@ export default function NavBar() {
 										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-900 dark:text-zinc-300 hover-underline-animation"
 									>
                     Non-EPCOT
-									</a>
+									</Link>
 									<Link
 										to={'epcot'}
 										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-zinc-300 hover-underline-animation"
 									>
                     EPCOT
-									</a>
+									</Link>
 								</div>
 							</div>
 							<div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
