@@ -25,6 +25,7 @@ import Logo from '../assets/mickeymousehead.png'
 import DarkModeLogo from '../assets/mickeymousehead_darkmode.png'
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import { useDarkMode } from '../context/DarkModeContext'
+import { Link } from 'react-router-dom'
 
 export default function NavBar() {
 	const [isDark, setIsDark] = useDarkMode()
@@ -55,14 +56,14 @@ export default function NavBar() {
 									/>
 								</div>
 								<div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-									<a
-										href={'non-epcot'}
+									<Link
+										to={'non-epcot'}
 										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-900 dark:text-zinc-300 hover-underline-animation"
 									>
                     Non-EPCOT
 									</a>
-									<a
-										href={'epcot'}
+									<Link
+										to={'epcot'}
 										className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-zinc-300 hover-underline-animation"
 									>
                     EPCOT

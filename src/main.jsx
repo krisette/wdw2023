@@ -2,18 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import EPCOTFoodsToTry from './components/EPCOTFoodsToTry'
 import FoodsToTry from './components/FoodsToTry'
 import Home from './components/Home'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
 		children: [
 			{
-				path: '/',
+				path: '',
 				element: <Home />
 			},
 			{
