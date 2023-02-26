@@ -148,7 +148,7 @@ export default function NavBar() {
 								</div>
 								<div className="ml-auto flex-shrink-0 flex items-center">
 									<span className="sr-only">Dark or light mode</span>
-									{isDark ? (
+									{!isDark ? (
 										<SunIcon className="h-6 w-6 text-white" aria-hidden="true" />
 									) : (
 										<MoonIcon className="h-6 w-6 text-black" aria-hidden="true" />
