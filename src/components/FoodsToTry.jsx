@@ -80,15 +80,9 @@ export default function FoodsToTry() {
 				[...filteredFood, ...defaultFood.filter((food) => food.parkid === parkId)]
 			)
 		} else {
-			if (filteredFood.length > 0) {
-				setFilteredFood(
-					filteredFood.filter((food) => food.parkid !== parkId)
-				)
-				console.log(filteredFood)
-			} else {
-				console.log('hello???')
-				setFiltered(false)
-			}
+			setFilteredFood(
+				filteredFood.filter((food) => food.parkid !== parkId)
+			)
 		}
 	}
 

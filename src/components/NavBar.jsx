@@ -50,7 +50,7 @@ export default function NavBar() {
 										alt="Mickey Mouse head"
 									/>
 									<img
-										className="hidden h-8 w-auto lg:block"
+										className="hidden h-8 w-auto lg:block hover:animate-spin"
 										src={isDark ? DarkModeLogo : Logo}
 										alt="Mickey Mouse head"
 									/>
