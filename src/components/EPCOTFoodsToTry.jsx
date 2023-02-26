@@ -1,8 +1,10 @@
-import React, { Fragment, useState, useEffect, Suspense } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
 import EPCOTFoodCard from './EPCOTFoodCard'
+import MickeyMouseLoader from './MickeyMouseLoader'
+import useSWR from 'swr'
 
 const filters = [
 	{
@@ -23,55 +25,125 @@ const filters = [
 			{ value: '12', label: 'Other' },
 		],
 	},
+	{
+		id: 'type',
+		name: 'Type',
+		options: [
+			{ value: 'Food', label: 'Food' },
+			{ value: 'Drink', label: 'Drink' },
+		],
+	},
+	{
+		id: 'festival',
+		name: 'Festival',
+		options: [
+			{ value: 'fg', label: 'Flower & Garden Festival'}
+		],
+	},
 ]
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
+const fetcher = (url) => fetch(url).then((r) => r.json())
+
+const useFood = () => {
+	const { data, error, isLoading } = useSWR(
+		'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/epcotFoodDrink',
+		fetcher
+	)
+
+	return {
+		food: data,
+		isLoading,
+		isError: error,
+	}
+}
+
 export default function FoodsToTry() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-	const [food, setFood] = useState([])
 	const [defaultFood, setDefaultFood] = useState([])
+	const [filtered, setFiltered] = useState(false)
+	const [filteredFood, setFilteredFood] = useState([])
+	const { food, isLoading, isError } = useFood()
 
 	useEffect(() => {
-		fetch(
-			'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/epcotFoodDrink'
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				setFood(data.epcotFoodDrink)
-				setDefaultFood(data.epcotFoodDrink)
-			})
-	}, [])
-
-	const filteredFood = []
-
-	const handleParkFilter = (e) => {
-		const parkId = parseInt(e.target.value)
-		if (e.target.checked) {
-			filteredFood.push(
-				...defaultFood.filter((food) => food.cid === parkId)
-			)
-			console.log('added: ', filteredFood)
-		} else {
-			for (let i = filteredFood.length - 1; i >= 0; i--) {
-				if (filteredFood[i].parkid === parkId) {
-					filteredFood.splice(i, 1)
-				}
-			}
-			console.log('removed: ', filteredFood)
+		if (food) {
+			setDefaultFood(food.epcotFoodDrink)
 		}
+	}, [food])
 
+	useEffect(() => {
 		if (filteredFood.length === 0) {
-			setFood(defaultFood)
-		} else {  
-			setFood(filteredFood)
+			setFiltered(false)
+		}
+	}, [filteredFood])
+
+	const handleEpcotFilter = (category, e) => {
+		console.log('checkbox clicked', category)
+		if (category === 'country') {
+			const countryId = parseInt(e.target.value)
+			if (e.target.checked) {
+				setFiltered(true)
+				setFilteredFood(
+					[...filteredFood, ...defaultFood.filter((food) => food.cid === countryId)]
+				)
+			} else {
+				setFilteredFood(
+					filteredFood.filter((food) => food.cid !== countryId)
+				)
+				console.log(filteredFood)
+			}
+		} else if (category === 'type') {
+			const type = e.target.value
+			if (e.target.checked) {
+				setFiltered(true)
+				setFilteredFood(
+					[...filteredFood, ...defaultFood.filter((food) => food.type === type)]
+				)
+			} else {
+				setFilteredFood(
+					filteredFood.filter((food) => food.type !== type)
+				)
+			}
+		} else if (category === 'festival') {
+			if (e.target.checked) {
+				setFiltered(true)
+				setFilteredFood(
+					[...filteredFood, ...defaultFood.filter((food) => food.festival)]
+				)
+			} else {
+				setFilteredFood(
+					filteredFood.filter((food) => !food.festival)
+				)
+			}
+		}
+	}
+
+	const displayFood = () => {
+		if (isLoading) {
+			return (<MickeyMouseLoader />)
+		} else if (isError) {
+			return(<div className="text-center text-2xl text-red-700">Error loading data</div>)
+		} else if (filtered) {
+			return filteredFood.map((item) => (
+				<EPCOTFoodCard
+					key={item.id}
+					item={item}
+				/>
+			))} else {
+			return food.epcotFoodDrink.map((item) => (
+				<EPCOTFoodCard
+					key={item.id}
+					item={item}
+				/>
+			))
 		}
 	}
 
 	return (
-		<div className="bg-zinc-100 dark:bg-zinc-800">
+		<div className="bg-zinc-100 dark:bg-zinc-800 min-h-screen">
 			<div>
 				{/* Mobile filter dialog */}
 				<Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -156,7 +228,7 @@ export default function FoodsToTry() {
 																			defaultValue={option.value}
 																			type="checkbox"
 																			className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-																			onChange={handleParkFilter}
+																			onClick={(e) => handleEpcotFilter(section.id, e)}
 																		/>
 																		<label
 																			htmlFor={`${section.id}-${optionIdx}-mobile`}
@@ -221,7 +293,7 @@ export default function FoodsToTry() {
 																defaultValue={option.value}
 																type="checkbox"
 																className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-																onClick={handleParkFilter}
+																onClick={(e) => handleEpcotFilter(section.id, e)}
 															/>
 															<label
 																htmlFor={`${section.id}-${optionIdx}`}
@@ -239,12 +311,8 @@ export default function FoodsToTry() {
 							</div>
 						</aside>
 
-						{/* Product grid */}
 						<div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3 lg:grid lg:grid-cols-2 lg:gap-5 lg:m-0 pb-6">
-							<Suspense fallback={<div>Loading...</div>}>
-								{food &&
-                  food.map((item) => <EPCOTFoodCard key={item.id} item={item} />)}
-							</Suspense>
+							{displayFood()}
 						</div>
 					</div>
 				</main>

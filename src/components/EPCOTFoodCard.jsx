@@ -46,6 +46,16 @@ function EPCOTFoodCard({ item }) {
 		}
 	}
 
+	const typeBadge = (type) => {
+		switch (type) {
+		case 'Food':
+			return <span className="border-[1px] border-violet-700 dark:border-violet-200 border-solid text-violet-700 dark:text-violet-200 text-xs rounded-full py-0.5 px-1.5 mt-1">Food</span>
+
+		case 'Drink':
+			return <span className="border-[1px] border-rose-700 dark:border-rose-200 border-solid text-rose-700 dark:text-rose-200 text-xs rounded-full py-0.5 px-1.5 mt-1">Drink</span>
+		}
+	}
+
 	return (
 		<div className="card mx-2 my-6 lg:m-0 bg-white dark:bg-[#545052] lg:card-side shadow-xl">
 			<figure>
@@ -58,8 +68,8 @@ function EPCOTFoodCard({ item }) {
 				<h3 className="text-md -mt-3 dark:text-gray-200">{item.name}</h3>
 				<p className="text-sm dark:text-zinc-400">{item.notes}</p>
 				<div className="card-actions justify-end">
-					{item.festival && <span className="border-[1px] border-neutral-700 dark:border-neutral-200 border-solid text-neutral-700 dark:text-neutral-200 text-xs rounded-full py-0.5 px-1.5 mt-1">F&G</span>}
-					{item.type && <span className="border-[1px] border-neutral-700 dark:border-neutral-200 border-solid text-neutral-700 dark:text-neutral-200 text-xs rounded-full py-0.5 px-1.5 mt-1">{item.type}</span>}
+					{item.festival && <span className="border-[1px] border-teal-700 dark:border-teal-200 border-solid text-teal-700 dark:text-nteal-200 text-xs rounded-full py-0.5 px-1.5 mt-1">F&G</span>}
+					{item.type && typeBadge(item.type)}
 					{item.country && countryBadge(item.country)}
 				</div>
 			</div>

@@ -12,11 +12,13 @@
   }
   ```
 */
-import React, { Fragment, useState, useEffect, Suspense } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
+import useSWR from 'swr'
 import FoodCard from './FoodCard'
+import MickeyMouseLoader from './MickeyMouseLoader'
 
 const filters = [
 	{
@@ -36,49 +38,83 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
+const fetcher = (url) => fetch(url).then((r) => r.json())
+
+const useFood = () => {
+	const { data, error, isLoading } = useSWR(
+		'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/nonEpcotFoodDrink',
+		fetcher
+	)
+
+	return {
+		food: data,
+		isLoading,
+		isError: error,
+	}
+}
+
 export default function FoodsToTry() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-	const [food, setFood] = useState([])
 	const [defaultFood, setDefaultFood] = useState([])
+	const [filtered, setFiltered] = useState(false)
+	const [filteredFood, setFilteredFood] = useState([])
+	const { food, isLoading, isError } = useFood()
 
 	useEffect(() => {
-		fetch(
-			'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/nonEpcotFoodDrink'
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				setFood(data.nonEpcotFoodDrink)
-				setDefaultFood(data.nonEpcotFoodDrink)
-			})
-	}, [])
+		if (food) {
+			setDefaultFood(food.nonEpcotFoodDrink)
+		}
+	}, [food])
 
-	const filteredFood = []
+	useEffect(() => {
+		if (filteredFood.length === 0) {
+			setFiltered(false)
+		}
+	}, [filteredFood])
 
 	const handleParkFilter = (e) => {
 		const parkId = parseInt(e.target.value)
 		if (e.target.checked) {
-			filteredFood.push(
-				...defaultFood.filter((food) => food.parkid === parkId)
+			setFiltered(true)
+			setFilteredFood(
+				[...filteredFood, ...defaultFood.filter((food) => food.parkid === parkId)]
 			)
-			console.log('added: ', filteredFood)
 		} else {
-			for (let i = filteredFood.length - 1; i >= 0; i--) {
-				if (filteredFood[i].parkid === parkId) {
-					filteredFood.splice(i, 1)
-				}
+			if (filteredFood.length > 0) {
+				setFilteredFood(
+					filteredFood.filter((food) => food.parkid !== parkId)
+				)
+				console.log(filteredFood)
+			} else {
+				console.log('hello???')
+				setFiltered(false)
 			}
-			console.log('removed: ', filteredFood)
 		}
+	}
 
-		if (filteredFood.length === 0) {
-			setFood(defaultFood)
-		} else {  
-			setFood(filteredFood)
+	const displayFood = () => {
+		if (isLoading) {
+			return (<MickeyMouseLoader />)
+		} else if (isError) {
+			return(<div className="text-center text-2xl text-red-700">Error loading data</div>)
+		} else if (filtered) {
+			return filteredFood.map((item) => (
+				<FoodCard
+					key={item.id}
+					item={item}
+				/>
+			))} else {
+			return food.nonEpcotFoodDrink.map((item) => (
+				<FoodCard
+					key={item.id}
+					item={item}
+				/>
+			))
 		}
 	}
 
 	return (
-		<div className="bg-zinc-100 dark:bg-zinc-800">
+		<div className="bg-zinc-100 dark:bg-zinc-800 min-h-screen">
 			<div>
 				{/* Mobile filter dialog */}
 				<Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -246,12 +282,8 @@ export default function FoodsToTry() {
 							</div>
 						</aside>
 
-						{/* Product grid */}
 						<div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3 lg:grid lg:grid-cols-2 lg:gap-5 lg:m-0 pb-6">
-							<Suspense fallback={<div>Loading...</div>}>
-								{food &&
-                  food.map((item) => <FoodCard key={item.id} item={item} />)}
-							</Suspense>
+							{displayFood()}
 						</div>
 					</div>
 				</main>

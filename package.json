@@ -17,7 +17,8 @@
     "react-dom": "^18.2.0",
     "react-list": "^0.8.17",
     "react-router-dom": "^6.8.1",
-    "react-toggle-dark-mode": "^1.1.1"
+    "react-toggle-dark-mode": "^1.1.1",
+    "swr": "^2.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
