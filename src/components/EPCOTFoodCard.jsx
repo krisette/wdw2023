@@ -68,7 +68,7 @@ function EPCOTFoodCard({ item }) {
 				<h3 className="text-md -mt-3 dark:text-gray-200">{item.name}</h3>
 				<p className="text-sm dark:text-zinc-400">{item.notes}</p>
 				<div className="card-actions justify-end">
-					{item.festival && <span className="border-[1px] border-teal-700 dark:border-teal-200 border-solid text-teal-700 dark:text-nteal-200 text-xs rounded-full py-0.5 px-1.5 mt-1">F&G</span>}
+					{item.festival && <span className="border-[1px] border-teal-700 dark:border-teal-200 border-solid text-teal-700 dark:text-teal-200 text-xs rounded-full py-0.5 px-1.5 mt-1">F&G</span>}
 					{item.type && typeBadge(item.type)}
 					{item.country && countryBadge(item.country)}
 				</div>
