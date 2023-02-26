@@ -1,33 +1,26 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import React, { Fragment, useState, useEffect, Suspense } from 'react'
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
-import FoodCard from './FoodCard'
+import EPCOTFoodCard from './EPCOTFoodCard'
 
 const filters = [
 	{
-		id: 'location',
-		name: 'Location',
+		id: 'country',
+		name: 'Country',
 		options: [
-			{ value: '1', label: 'Animal Kingdom' },
-			{ value: '2', label: 'Hollywood Studios' },
-			{ value: '3', label: 'Magic Kingdom' },
-			{ value: '4', label: 'Disney Springs' },
-			{ value: '5', label: 'Resorts' },
+			{ value: '1', label: 'Mexico' },
+			{ value: '2', label: 'Norway' },
+			{ value: '3', label: 'China' },
+			{ value: '4', label: 'Germany' },
+			{ value: '5', label: 'Italy' },
+			{ value: '6', label: 'Canada' },
+			{ value: '7', label: 'USA' },
+			{ value: '8', label: 'Morocco' },
+			{ value: '9', label: 'Japan' },
+			{ value: '10', label: 'France' },
+			{ value: '11', label: 'United Kingdom' },
+			{ value: '12', label: 'Other' },
 		],
 	},
 ]
@@ -43,12 +36,12 @@ export default function FoodsToTry() {
 
 	useEffect(() => {
 		fetch(
-			'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/nonEpcotFoodDrink'
+			'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/epcotFoodDrink'
 		)
 			.then((response) => response.json())
 			.then((data) => {
-				setFood(data.nonEpcotFoodDrink)
-				setDefaultFood(data.nonEpcotFoodDrink)
+				setFood(data.epcotFoodDrink)
+				setDefaultFood(data.epcotFoodDrink)
 			})
 	}, [])
 
@@ -58,7 +51,7 @@ export default function FoodsToTry() {
 		const parkId = parseInt(e.target.value)
 		if (e.target.checked) {
 			filteredFood.push(
-				...defaultFood.filter((food) => food.parkid === parkId)
+				...defaultFood.filter((food) => food.cid === parkId)
 			)
 			console.log('added: ', filteredFood)
 		} else {
@@ -250,7 +243,7 @@ export default function FoodsToTry() {
 						<div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3 lg:grid lg:grid-cols-2 lg:gap-5 lg:m-0 pb-6">
 							<Suspense fallback={<div>Loading...</div>}>
 								{food &&
-                  food.map((item) => <FoodCard key={item.id} item={item} />)}
+                  food.map((item) => <EPCOTFoodCard key={item.id} item={item} />)}
 							</Suspense>
 						</div>
 					</div>

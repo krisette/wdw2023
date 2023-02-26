@@ -5,23 +5,20 @@ function FoodCard({ item }) {
 	const parkBadge = (park) => {
 		switch (park) {
 		case 'Magic Kingdom':
-			return <span className="badge badge-outline">MK</span>
-
-		case 'EPCOT':
-			return <span className="badge badge-primary badge-outline">EP</span>
+			return <span className="border-[1px] border-pink-700 dark:border-pink-200 border-solid text-pink-700 dark:text-pink-200 text-xs rounded-full py-0.5 px-1.5">MK</span>
 
 		case 'Hollywood Studios':
-			return <span className="badge badge-secondary badge-outline">HS</span>
+			return <span className="border-[1px] border-purple-700 dark:border-purple-200 border-solid text-purple-700 dark:text-purple-200 text-xs rounded-full py-0.5 px-2">HS</span>
 
 		case 'Animal Kingdom':
-			return <span className="badge badge-accent badge-outline">AK</span>
+			return <span className="border-[1px] border-green-700 dark:border-green-200 border-solid text-green-700 dark:text-green-200 text-xs rounded-full py-0.5 px-1.5">AK</span>
 
 		case 'Disney Springs':
-			return <span className="badge badge-success badge-outline">DS</span>
+			return <span className="border-[1px] border-amber-700 dark:border-amber-200 border-solid text-amber-700 dark:text-amber-200 text-xs rounded-full py-0.5 px-1.5">DS</span>
 
 		default:
 			return (
-				<span className="badge badge-warning badge-outline">{park}</span>
+				<span className="border-[1px] border-neutral-700 dark:border-neutral-200 border-solid text-neutral-700 dark:text-neutral-200 text-xs rounded-full py-0.5 px-1.5">{park}</span>
 			)
 		}
 	}
