@@ -4,43 +4,9 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
 import EPCOTFoodCard from './EPCOTFoodCard'
 import MickeyMouseLoader from './MickeyMouseLoader'
+import { epcotFilters } from '../data/categories'
+import { apiUrl } from '../util/api'
 import useSWR from 'swr'
-
-const filters = [
-	{
-		id: 'country',
-		name: 'Country',
-		options: [
-			{ value: '1', label: 'Mexico' },
-			{ value: '2', label: 'Norway' },
-			{ value: '3', label: 'China' },
-			{ value: '4', label: 'Germany' },
-			{ value: '5', label: 'Italy' },
-			{ value: '6', label: 'Canada' },
-			{ value: '7', label: 'USA' },
-			{ value: '8', label: 'Morocco' },
-			{ value: '9', label: 'Japan' },
-			{ value: '10', label: 'France' },
-			{ value: '11', label: 'United Kingdom' },
-			{ value: '12', label: 'Other' },
-		],
-	},
-	{
-		id: 'type',
-		name: 'Type',
-		options: [
-			{ value: 'Food', label: 'Food' },
-			{ value: 'Drink', label: 'Drink' },
-		],
-	},
-	{
-		id: 'festival',
-		name: 'Festival',
-		options: [
-			{ value: 'fg', label: 'Flower & Garden Festival'}
-		],
-	},
-]
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -50,7 +16,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 
 const useFood = () => {
 	const { data, error, isLoading } = useSWR(
-		'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/epcotFoodDrink',
+		apiUrl.epcot,
 		fetcher
 	)
 
@@ -191,7 +157,7 @@ export default function FoodsToTry() {
 
 									{/* Filters */}
 									<form className="mt-4">
-										{filters.map((section) => (
+										{epcotFilters.map((section) => (
 											<Disclosure
 												as="div"
 												key={section.name}
@@ -272,7 +238,7 @@ export default function FoodsToTry() {
 
 							<div className="hidden lg:block">
 								<form className="space-y-10 divide-y divide-gray-200">
-									{filters.map((section, sectionIdx) => (
+									{epcotFilters.map((section, sectionIdx) => (
 										<div
 											key={section.name}
 											className={sectionIdx === 0 ? null : 'pt-10'}

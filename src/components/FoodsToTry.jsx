@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
@@ -19,20 +5,8 @@ import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid'
 import useSWR from 'swr'
 import FoodCard from './FoodCard'
 import MickeyMouseLoader from './MickeyMouseLoader'
-
-const filters = [
-	{
-		id: 'location',
-		name: 'Location',
-		options: [
-			{ value: '1', label: 'Animal Kingdom' },
-			{ value: '2', label: 'Hollywood Studios' },
-			{ value: '3', label: 'Magic Kingdom' },
-			{ value: '4', label: 'Disney Springs' },
-			{ value: '5', label: 'Resorts' },
-		],
-	},
-]
+import { apiUrl } from '../util/api'
+import { nonepcotFilters } from '../data/categories'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -42,7 +16,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 
 const useFood = () => {
 	const { data, error, isLoading } = useSWR(
-		'https://api.sheety.co/cc270e0a474c6d0254ff0f218294996c/wdw2023/nonEpcotFoodDrink',
+		apiUrl.nonepcot,
 		fetcher
 	)
 
@@ -156,7 +130,7 @@ export default function FoodsToTry() {
 
 									{/* Filters */}
 									<form className="mt-4">
-										{filters.map((section) => (
+										{nonepcotFilters.map((section) => (
 											<Disclosure
 												as="div"
 												key={section.name}
@@ -237,7 +211,7 @@ export default function FoodsToTry() {
 
 							<div className="hidden lg:block">
 								<form className="space-y-10 divide-y divide-gray-200">
-									{filters.map((section, sectionIdx) => (
+									{nonepcotFilters.map((section, sectionIdx) => (
 										<div
 											key={section.name}
 											className={sectionIdx === 0 ? null : 'pt-10'}
