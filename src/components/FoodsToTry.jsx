@@ -7,6 +7,7 @@ import FoodCard from './FoodCard'
 import MickeyMouseLoader from './MickeyMouseLoader'
 import { apiUrl } from '../util/api'
 import { nonepcotFilters } from '../data/categories'
+import { useSearchContext } from '../context/SearchContext'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -33,6 +34,7 @@ export default function FoodsToTry() {
 	const [filtered, setFiltered] = useState(false)
 	const [filteredFood, setFilteredFood] = useState([])
 	const { food, isLoading, isError } = useFood()
+	const { search } = useSearchContext()
 
 	useEffect(() => {
 		if (food) {
@@ -72,12 +74,19 @@ export default function FoodsToTry() {
 					item={item}
 				/>
 			))} else {
-			return food.nonEpcotFoodDrink.map((item) => (
-				<FoodCard
-					key={item.id}
-					item={item}
-				/>
-			))
+			return food.nonEpcotFoodDrink.filter((card) => {
+				if (search === '') {
+					return card
+				} else if (card.item.toLowerCase().includes(search.toLowerCase())) {
+					return card
+				}
+			}).
+				map((item) => (
+					<FoodCard
+						key={item.id}
+						item={item}
+					/>
+				))
 		}
 	}
 

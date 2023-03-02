@@ -5,7 +5,7 @@ import './index.css'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import EPCOTFoodsToTry from './components/EPCOTFoodsToTry'
 import FoodsToTry from './components/FoodsToTry'
-import Home from './components/Home'
+import { SearchProvider } from './context/SearchContext'
 
 const router = createHashRouter([
 	{
@@ -26,6 +26,8 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<SearchProvider>
+			<RouterProvider router={router} />
+		</SearchProvider>
 	</React.StrictMode>
 )

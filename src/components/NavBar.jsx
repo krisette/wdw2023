@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import React from 'react'
 import { Disclosure } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
@@ -26,9 +12,12 @@ import DarkModeLogo from '../assets/mickeymousehead_darkmode.png'
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import { useDarkMode } from '../context/DarkModeContext'
 import { Link } from 'react-router-dom'
+import { useSearchContext } from '../context/SearchContext'
 
 export default function NavBar() {
 	const [isDark, setIsDark] = useDarkMode()
+	const { setSearch } = useSearchContext()
+	
 	const toggleDarkMode = (checked) => {
 		setIsDark(checked)
 	}
@@ -73,7 +62,7 @@ export default function NavBar() {
 							<div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
 								<div className="w-full max-w-lg lg:max-w-xs">
 									<label htmlFor="search" className="sr-only">
-                    Search
+                    Search by name
 									</label>
 									<div className="relative">
 										<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -85,16 +74,17 @@ export default function NavBar() {
 										<input
 											id="search"
 											name="search"
-											className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-indigo-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-											placeholder="Search"
+											className="block w-full rounded-md border border-zinc-300 dark:border-gray-700 bg-white dark:bg-zinc-900 py-2 pl-10 pr-3 leading-5 placeholder-gray-500 dark:text-white focus:border-[#e0c2d0] focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#e0c2d0] sm:text-sm"
+											placeholder="Search by name"
 											type="search"
+											onChange={(e) => setSearch(e.target.value)}
 										/>
 									</div>
 								</div>
 							</div>
 							<div className="flex items-center lg:hidden">
 								{/* Mobile menu button */}
-								<Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+								<Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#e0c2d0]">
 									<span className="sr-only">Open main menu</span>
 									{open ? (
 										<XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -108,7 +98,7 @@ export default function NavBar() {
 									type="button"
 									className="flex-shrink-0 rounded-full p-1 focus:outline-none"
 								>
-									<span className="sr-only">View notifications</span>
+									<span className="sr-only">Dark/light mode</span>
 									<DarkModeSwitch checked={isDark} onChange={toggleDarkMode} />
 								</button>
 							</div>
@@ -117,7 +107,6 @@ export default function NavBar() {
 
 					<Disclosure.Panel className="lg:hidden">
 						<div className="space-y-1 pt-2 pb-3">
-							{/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
 							<Disclosure.Button
 								as={Link}
 								to={''}
