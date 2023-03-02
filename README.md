@@ -1,5 +1,7 @@
 # disney world 2023
-a suggestion list of food/drinks to try on our vacation, now in a convenient web app
+my friends and i created a spreadsheet of food/drink we wanted to try on our disney world vacation, so i decided to visualize this data in a web app for better and more efficient mobile viewing.
+
+demo: https://wdw2023-production.up.railway.app/
 
 ## made with
 * ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -11,4 +13,3 @@ a suggestion list of food/drinks to try on our vacation, now in a convenient web
 * ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
 
-demo: https://wdw2023-production.up.railway.app/
