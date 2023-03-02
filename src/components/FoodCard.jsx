@@ -31,7 +31,7 @@ function FoodCard({ item }) {
 				)}
 			</figure>
 			<div className="card-body">
-				<h2 className="card-title dark:text-white">{item.foodItem}</h2>
+				<h2 className="card-title dark:text-white">{item.item}</h2>
 				<h3 className="text-md -mt-3 dark:text-gray-200">{item.name}</h3>
 				<p className="text-sm dark:text-zinc-400">{item.notes}</p>
 				<div className="card-actions justify-end">
